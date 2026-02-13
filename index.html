@@ -1,354 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Jassica | 16 Feb 2022</title>
-    <meta name="robots" content="noindex, nofollow">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Love Story</title>
 
-    <style>
-        :root {
-            --color-rose-soft: #F6D1D1;
-            --color-rose-deep: #C04A4A;
-            --color-cream: #FFF7F0;
-            --color-gold: #D4AF37;
-            --color-charcoal: #222222;
-            --font-serif: 'Playfair Display', serif;
-            --font-sans: 'Inter', sans-serif;
-            --transition-slow: 1.5s ease-in-out;
-        }
+<style>
+body{
+margin:0;
+font-family:Arial;
+overflow:hidden;
+background:black;
+color:white;
+text-align:center;
+}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            background-color: var(--color-cream);
-            color: var(--color-charcoal);
-            font-family: var(--font-sans);
-            overflow-x: hidden;
-            overflow-y: hidden;
-        }
+.scene{
+position:absolute;
+width:100%;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+opacity:0;
+transition:1s;
+}
 
-        h1, h2, h3 { font-family: var(--font-serif); font-weight: 600; }
-        .gold-text { color: var(--color-gold); }
-        .deep-rose-text { color: var(--color-rose-deep); }
-        .hidden { opacity: 0; pointer-events: none; transition: opacity 1s; }
-        .visible { opacity: 1; pointer-events: auto; }
-        
-        .scene {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            background-size: cover;
-            background-position: center;
-            transition: opacity var(--transition-slow), transform 2s ease;
-        }
+.visible{opacity:1}
 
-        #ui-layer {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 999;
-            display: flex;
-            gap: 15px;
-        }
+video,img{
+max-width:90%;
+max-height:70vh;
+border-radius:12px;
+}
 
-        .icon-btn {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--color-gold);
-            color: var(--color-gold);
-            padding: 10px 15px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+button{
+padding:12px 22px;
+font-size:18px;
+background:#ff4d6d;
+border:none;
+border-radius:30px;
+color:white;
+cursor:pointer;
+}
 
-        #scene-hero { background-color: #000; color: var(--color-cream); }
-        #hero-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; opacity: 0.6;
-            animation: zoomSlow 20s infinite alternate;
-        }
+.heart{
+position:absolute;
+color:red;
+font-size:20px;
+animation:fall 4s linear infinite;
+}
 
-        .hero-content { position: relative; z-index: 2; max-width: 600px; }
-        .hero-date { font-size: 1.2rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px; color: var(--color-rose-soft); }
-        .hero-title { font-size: 3.5rem; line-height: 1.2; margin-bottom: 20px; }
-
-        #scene-video { background: black; }
-        video {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; opacity: 0.7;
-        }
-
-        .overlay-card {
-            position: relative; z-index: 5;
-            background: rgba(255, 247, 240, 0.85);
-            padding: 40px;
-            border: 1px solid var(--color-gold);
-            max-width: 500px;
-            border-radius: 2px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            transform: translateY(20px);
-            opacity: 0;
-            transition: all 1s ease;
-        }
-        .overlay-card.active { transform: translateY(0); opacity: 1; }
-
-        #scene-timeline { background: var(--color-cream); }
-
-        .slide-container {
-            width: 100%; max-width: 500px; height: 60vh;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            border-radius: 200px 200px 0 0;
-            border: 2px solid var(--color-gold);
-        }
-
-        .slide {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0; transition: opacity 1.5s ease;
-        }
-        .slide.active { opacity: 1; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; }
-
-        .caption-box { margin-top: 30px; height: 60px; }
-
-        #scene-letter {
-            background: linear-gradient(to bottom, var(--color-cream), var(--color-rose-soft));
-        }
-
-        .letter-content {
-            max-width: 600px;
-            padding: 40px;
-            border: 1px solid var(--color-gold);
-            position: relative;
-        }
-
-        @keyframes zoomSlow { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
-
-        .petal {
-            position: absolute; background: var(--color-rose-deep);
-            width: 10px; height: 10px; border-radius: 100% 0 100% 0;
-            opacity: 0.6; animation: fall linear forwards;
-            top: -10vh; pointer-events: none; z-index: 10;
-        }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-    </style>
+@keyframes fall{
+0%{transform:translateY(-10vh)}
+100%{transform:translateY(110vh)}
+}
+</style>
 </head>
 <body>
 
-<div id="ui-layer">
-    <button id="unmute-btn" class="icon-btn" onclick="toggleAudio()">🔇 Unmute Sound</button>
-</div>
-
-<audio id="bg-music" loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9b8d6f.mp3?filename=romantic-background-11274.mp3" type="audio/mp3">
+<audio autoplay loop>
+<source src="https://raw.githubusercontent.com/rajdeep1984/love-story/main/music.mp3">
 </audio>
 
-<div id="scene-hero" class="scene visible">
-    <img id="hero-bg" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=2070&auto=format&fit=crop">
-    <div class="hero-content">
-        <p class="hero-date" id="hero-date-text">16 Feb 2022</p>
-        <h1 class="hero-title" id="hero-title-text">Jassica ❤️</h1>
-    </div>
+<!-- HERO -->
+<div id="hero" class="scene visible">
+<h1>9 December 2024 ❤️</h1>
+<h2>Jab tumne 'Haan' kaha</h2>
 </div>
 
-<div id="scene-video" class="scene hidden">
-    <video id="main-video" playsinline muted loop>
-        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
-    </video>
-    <div class="overlay-card" id="video-overlay">
-        <h2 class="deep-rose-text">एक छोटा सा सफ़र</h2>
-        <p>"Yaadon ka ek pal... jo humesha mere dil ke paas rahega."</p>
-    </div>
+<!-- CHAT VIDEO -->
+<div id="chat" class="scene">
+<video autoplay muted>
+<source src="https://raw.githubusercontent.com/rajdeep1984/love-story/main/love.mp4">
+</video>
+<p>Jahan sab shuru hua… Instagram 💬</p>
 </div>
 
-<div id="scene-timeline" class="scene hidden">
-    <h2 class="deep-rose-text">Our Journey</h2>
-    <div class="slide-container" id="slides-wrapper"></div>
-    <div class="caption-box">
-        <p id="slide-caption"></p>
-    </div>
+<!-- BADMINTON -->
+<div id="badminton" class="scene">
+<img src="https://raw.githubusercontent.com/rajdeep1984/love-story/main/badminton.jpeg">
+<h2>Our First Date 🏸</h2>
 </div>
 
-<div id="scene-letter" class="scene hidden">
-    <div class="letter-content">
-        <h1 class="deep-rose-text">Jassica,</h1>
-        <p>
-            Tumne jo 16 Feb 2022 ko ‘Haan’ kaha, usi ne meri duniya badal di.<br><br>
-            Har din tumhare saath ek nayi shuruaat hai. Thank you for being my everything.
-        </p>
-        <h3 class="gold-text">Forever Yours,<br><span id="my-name">Suhail</span></h3>
-    </div>
-    <p style="position:absolute; bottom:20px;">Made with ❤️ by Suhail</p>
+<!-- LETTER -->
+<div id="letter" class="scene">
+<h2>Ek chota sa safar…</h2>
+<p>Jo shuru hua ek chat se,<br>
+Badminton court tak aaya,<br>
+Aur ab zindagi ban gaya ❤️</p>
+</div>
+
+<!-- VALENTINE -->
+<div id="val" class="scene">
+<h1>Will you be my Valentine?</h1>
+<button onclick="yes()">Yes ❤️</button>
+</div>
+
+<!-- FINAL -->
+<div id="final" class="scene">
+<img src="https://raw.githubusercontent.com/rajdeep1984/love-story/main/pic2.jpg">
+<h1>Forever Us 💞</h1>
 </div>
 
 <script>
-const CONFIG = {
-    hero: {
-        date: "9 December 2024, Monday",
-        title: "Jab Jassica ne kaha ‘Haan’ ❤️",
-        image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=2070&auto=format&fit=crop"
-    },
-    sequenceTiming: {
-        heroDuration: 4000,
-        videoDuration: 10000,
-        slideDuration: 4000
-    },
-    timeline: [
-        { img: "https://images.unsplash.com/photo-1522673607200-1645062af631?auto=format&fit=crop&w=800", caption: "Humari pehli mulakat..." },
-        { img: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800", caption: "Woh pehli coffee date ☕" },
-        { img: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800", caption: "16 Feb 2022 - The Big Day 💍" },
-        { img: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800", caption: "Aur ye safar chalta rahega..." }
-    ],
-    myName: "Suhail"
-};
 
-document.getElementById('hero-date-text').innerText = CONFIG.hero.date;
-document.getElementById('hero-title-text').innerText = CONFIG.hero.title;
-document.getElementById('hero-bg').src = CONFIG.hero.image;
-document.getElementById('my-name').innerText = CONFIG.myName;
+let scenes=["hero","chat","badminton","letter","val"];
+let i=0;
 
-const slidesWrapper = document.getElementById('slides-wrapper');
-CONFIG.timeline.forEach((item, index) => {
-    const div = document.createElement('div');
-    div.className = `slide ${index === 0 ? 'active' : ''}`;
-    div.innerHTML = `<img src="${item.img}">`;
-    slidesWrapper.appendChild(div);
-});
-
-const audio = document.getElementById('bg-music');
-const video = document.getElementById('main-video');
-const btn = document.getElementById('unmute-btn');
-let isMuted = true;
-
-function toggleAudio() {
-    if(isMuted) {
-        audio.play();
-        video.muted = false;
-        isMuted = false;
-        btn.innerText = "🔊 Sound On";
-    } else {
-        audio.pause();
-        video.muted = true;
-        isMuted = true;
-        btn.innerText = "🔇 Unmute Sound";
-    }
+function next(){
+document.getElementById(scenes[i]).classList.remove("visible");
+i++;
+if(i<scenes.length){
+document.getElementById(scenes[i]).classList.add("visible");
+}
 }
 
-async function startCinematicExperience() {
-    await wait(CONFIG.sequenceTiming.heroDuration);
-    switchScene('scene-hero', 'scene-video');
-    video.play();
+setInterval(next,5000);
 
-    setTimeout(() => {
-        document.getElementById('video-overlay').classList.add('active');
-    }, 2000);
-
-    await wait(CONFIG.sequenceTiming.videoDuration);
-    switchScene('scene-video', 'scene-timeline');
-    startSlideshow();
-
-    const totalSlideTime = CONFIG.timeline.length * CONFIG.sequenceTiming.slideDuration;
-    await wait(totalSlideTime);
-    switchScene('scene-timeline', 'scene-letter');
+function yes(){
+document.getElementById("val").classList.remove("visible");
+document.getElementById("final").classList.add("visible");
+burst();
 }
 
-function switchScene(fromId, toId) {
-    document.getElementById(fromId).classList.replace('visible', 'hidden');
-    setTimeout(() => {
-        document.getElementById(toId).classList.replace('hidden', 'visible');
-    }, 1000);
+function burst(){
+for(let i=0;i<40;i++){
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+h.style.animationDuration=2+Math.random()*3+"s";
+document.body.appendChild(h);
 }
-
-function startSlideshow() {
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    const caption = document.getElementById('slide-caption');
-    caption.innerText = CONFIG.timeline[0].caption;
-
-    setInterval(() => {
-        slides[currentSlide].classList.remove('active');
-        currentSlide++;
-        if (currentSlide >= slides.length) return;
-        slides[currentSlide].classList.add('active');
-        caption.innerText = CONFIG.timeline[currentSlide].caption;
-    }, CONFIG.sequenceTiming.slideDuration);
-}
-
-function wait(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
-
-window.onload = () => {
-    setTimeout(startCinematicExperience, 1000);
-};
-async function startCinematicExperience() {
-    await wait(CONFIG.sequenceTiming.heroDuration);
-    switchScene('scene-hero', 'scene-video');
-    video.play();
-
-    setTimeout(() => {
-        document.getElementById('video-overlay').classList.add('active');
-    }, 2000);
-
-    await wait(CONFIG.sequenceTiming.videoDuration);
-    switchScene('scene-video', 'scene-timeline');
-    startSlideshow();
-
-    const totalSlideTime = CONFIG.timeline.length * CONFIG.sequenceTiming.slideDuration;
-    await wait(totalSlideTime);
-    switchScene('scene-timeline', 'scene-letter');
-
-    await wait(6000); 
-    switchScene('scene-letter', 'scene-valentine');
-}
-
-function acceptLove(){
-    heartBurst();
-    switchScene('scene-valentine','scene-yes');
-}
-
-function heartBurst(){
-    for(let i=0;i<25;i++){
-        const heart=document.createElement("div");
-        heart.className="petal";
-        heart.style.left=Math.random()*100+"vw";
-        heart.style.animationDuration=(3+Math.random()*2)+"s";
-        document.body.appendChild(heart);
-        setTimeout(()=>heart.remove(),5000);
-    }
 }
 
 </script>
-<div id="scene-valentine" class="scene hidden">
-    <div class="overlay-card active" style="text-align:center;">
-        <h2 class="deep-rose-text">Jassica ❤️</h2>
-        <h1>Will you be my Valentine?</h1>
-        <button class="icon-btn" onclick="acceptLove()">Yes 💖</button>
-    </div>
-</div>
-
-<div id="scene-yes" class="scene hidden">
-    <div class="overlay-card active" style="text-align:center;">
-        <h2 class="deep-rose-text">Forever Us ❤️</h2>
-        <div style="display:flex; gap:20px; margin-top:20px;">
-            <img src="YOUR_PHOTO.jpg" style="width:120px; height:120px; border-radius:10px;">
-            <img src="HER_PHOTO.jpg" style="width:120px; height:120px; border-radius:10px;">
-        </div>
-        <p style="margin-top:15px;">She said YES 💍</p>
-    </div>
-</div>
-
 </body>
 </html>
